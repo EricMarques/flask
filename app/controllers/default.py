@@ -1,5 +1,12 @@
+from flask import render_template
 from app import app
 
+
+@app.route('/index')
 @app.route('/')
 def index():
-    return '<html><form><label for="teste">Nome: <input type="text" name="teste" id="teste"/></form></html>'
+    return render_template('index.html')
+
+@app.route('/login')
+def base():
+    return render_template('base.html')
