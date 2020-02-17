@@ -32,10 +32,27 @@ def testInsert(info):
     db.session.commit()
     return "Inserido"
 
-@app.route('/testSelect/<info>')
-@app.route('/testSelect', defaults={"info": None})
-def testSelect(info):
+@app.route('/testSelect/<name>')
+@app.route('/testSelect', defaults={"name": None})
+def testSelect(name):
     #select = User.query.filter_by(username="erc_m").all() #retorna o usuário por campo 
-    select = User.query.get(1) #retorna registro por ID
+    select = User.query.filter_by(username="erc_m").first() #retorna registro por ID
     print(select)
-    return "%r" %select
+    return render_template('test.html', name = select.name)
+
+@app.route('/testUpdate/<info>')
+@app.route('/testUpdate', defaults={"info": None})
+def testUpdate(info):
+    update = User.query.filter_by(username="erc_m").first()
+    update.name = "Eric F. Marques"
+    db.session.add(update)
+    db.session.commit()
+    return "Alterado"
+
+@app.route('/testDelete/<info>')
+@app.route('/testDelete', defaults={"info": None})
+def testDelete(info):
+    delete = User.query.filter_by(username="ercic").first()
+    db.session.delete(delete)
+    db.session.commit()
+    return "Deletado"
