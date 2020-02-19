@@ -1,5 +1,6 @@
-from flask import render_template
+from flask import render_template, request, redirect
 from app import app, db
+from datetime import datetime
 
 from app.models.tables import User
 from app.models.forms import LoginForm
@@ -20,10 +21,25 @@ def login():
         print(login.errors)
     return render_template('login.html', login=login)
 
+@app.route('/user', methods=['GET', 'POST'])
+def user():
+    if request.method == 'POST':
+        user_username = request.form['username']
+        user_password = request.form['password']
+        user_name = request.form['name']
+        user_email = request.form['email']
+        created_at = datetime.now()
+        new_user = User(username=user_username, password=user_password, name=user_name, email=user_email, created_at=created_at)
+        db.session.add(new_user)
+        db.session.commit()
+        print('username: {} -> paswd: {} -> name: {} -> email: {} -> criado em: {}'.format(user_username, user_password, user_name, user_email, created_at))
+        return redirect('/user')
+    else:
+        return render_template('users/user.html')
 
 
-
-'''*****************'''
+'''
+*****************
 @app.route('/testInsert/<info>')
 @app.route('/testInsert', defaults={"info": None})
 def testInsert(info):
@@ -56,3 +72,4 @@ def testDelete(info):
     db.session.delete(delete)
     db.session.commit()
     return "Deletado"
+'''
