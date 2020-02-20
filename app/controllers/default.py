@@ -29,10 +29,13 @@ def user():
         user_name = request.form['name']
         user_email = request.form['email']
         created_at = datetime.now()
-        new_user = User(username=user_username, password=user_password, name=user_name, email=user_email, created_at=created_at)
+        updated_at = None
+        deleted = 0
+        deleted_at = None
+        new_user = User(username=user_username, password=user_password, name=user_name, email=user_email, created_at=created_at, updated_at=updated_at, deleted=deleted, deleted_at=deleted_at)
         db.session.add(new_user)
         db.session.commit()
-        print('username: {} -> paswd: {} -> name: {} -> email: {} -> criado em: {}'.format(user_username, user_password, user_name, user_email, created_at))
+        print('username: {} -> paswd: {} -> name: {} -> email: {} -> criado em: {} -> modificado em: {} -> deletado: {} -> deletado em: {}'.format(user_username, user_password, user_name, user_email, created_at, updates_at, deleted, deleted_at))
         return redirect('/user')
     else:
         return render_template('users/user.html')

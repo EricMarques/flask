@@ -6,20 +6,26 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(80), unique = True, nullable = False)
-    password = db.Column(db.String(20), nullable = True)
-    name = db.Column(db.String(50), nullable = True)
+    password = db.Column(db.String(20), nullable = False)
+    name = db.Column(db.String(50), nullable = False)
     email = db.Column(db.String(120), unique = True, nullable = False)
-    created_at = db.Column(db.DateTime, nullable = False, default = datetime.now())
+    created_at = db.Column(db.DateTime, nullable = False, default = datetime.utcnow())
+    updated_at = db.Column(db.DateTime, nullable = True, default = None)
+    deleted = db.Column(db.Boolean, default = 0)
+    deleted_at = db.Column(db.DateTime, nullable = True, default = None)
 
-    def __init__(self, username, password, name, email, created_at):
+    def __init__(self, username, password, name, email, created_at, updated_at, deleted, deleted_at):
         self.username = username
         self.password = password
         self.name = name
         self.email = email
         self.created_at = created_at
+        self.updated_at = updated_at
+        self.deleted = deleted
+        self.deleted_at = deleted_at
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return 'User: ' + self.username
     
 class Post(db.Model):
     __tablename__ = 'posts'
