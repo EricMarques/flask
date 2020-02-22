@@ -24,44 +24,43 @@ def login():
 @app.route('/personRegister', methods=['GET', 'POST'])
 def Person():
     personRegistration = PersonRegistrationForm()
-    '''
-    self.document_type = document_type
-        self.registration_card = registration_card
-        self.first_name = first_name
-        self.second_name = second_name
-        self.birth_day = birth_day
-        self.nick_name = nick_name
-        self.identification = identification
-        self.email = email
-        self.phone_number = phone_number
-        self.cellphone_number = cellphone_number
-        self.father_name = father_name
-        self.mother_name = mother_name
-        self.postal_code = postal_code
-        self.street = street
-        self.number = number
-        self.complement = complement
-        self.neighborhood = neighborhood
-        self.city = city
-        self.state = state
-        self.country = country
-        self.created_at = created_at
-        self.updated_at = updated_at
-        self.deleted = deleted
-        self.deleted_at = deleted_at
-    '''
-    person_name = personRegistration.name.data
-    person_email = personRegistration.email.data
-    created_at = datetime.now()
-    updated_at = None
-    deleted = 0
-    deleted_at = None
+    #Person Identification
+    document_type = personRegistration.document_type.data  #0 - PF || 1 - PJ
+    registration_card = personRegistration.registration_card.data  #CPF/CNPJ
+    first_name = personRegistration.first_name.data  #Name
+    second_name = personRegistration.second_name.data  #Second name
+    birth_day = personRegistration.birth_day.data  #Birth day
+    nick_name = personRegistration.nick_name.data  #Nickname
+    identification =  personRegistration.identification.data  #Identification
+    father_name = personRegistration.father_name.data  #Father name
+    mother_name = personRegistration.mother_name.data  #Mother name
+
+    #Contact
+    email = personRegistration.email.data  #E-mail
+    phone_number = personRegistration.phone_number.data  #Phone
+    cellphone_number = personRegistration.cellphone_number.data  #Cell phone
+
+    #Address
+    postal_code = personRegistration.postal_code.data  #Postal code
+    street = personRegistration.street.data  #Street
+    number = personRegistration.number.data  #Numer
+    complement = personRegistration.complement.data  #Complement
+    neighborhood = personRegistration.neighborhood.data  #Neighborhood
+    city = personRegistration.city.data  #City
+    state = personRegistration.state.data  #State
+    country = personRegistration.country.data  #Country
+
+    #Action DateTime
+    created_at = datetime.now()  #Created at
+    updated_at = None  #Updated at  #Deleted(soft delete)
+    deleted = 0  #Deleted(soft delete)
+    deleted_at = None  #Deleted at(soft delete)
     if personRegistration.validate_on_submit():
-        new_person = Person(name=person_name, email=person_email, created_at=created_at, updated_at=updated_at, deleted=deleted, deleted_at=deleted_at)
+        new_person = Person(document_type=document_type, registration_card=registration_card, first_name=first_name, second_name=second_name, birth_day=birth_day, nick_name=nick_name, identification=identification, father_name=father_name, mother_name=mother_name, email=email, phone_number=phone_number, cellphone_number=cellphone_number, postal_code=postal_code, street=street, number=number, complement=complement, neighborhood=neighborhood, city=city, state=state, country=country, created_at=created_at, updated_at=updated_at, deleted=deleted, deleted_at=deleted_at)
         db.session.add(new_person)
         db.session.commit()
 
-        print('name: {} -> email: {} -> criado em: {} -> modificado em: {} -> deletado: {} -> deletado em: {}'.format(person_name, person_email, created_at, updated_at, deleted, deleted_at))
+        print('document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, created_at, updated_at, deleted, deleted_at))
 
         return redirect('/personRegister')
     else:

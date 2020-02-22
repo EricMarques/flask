@@ -1,30 +1,192 @@
 {%extends 'base.html'%} {%block title%}{{super()}} - Usuário {%endblock%} {%block content%}
 <main role="main" class="container" style="margin: 30px 0 255px 200px;">
     <div>
-        <h2>Cadastro de Usuário</h2>
+        <h2>Cadastro de Pacientes</h2>
+        <br>
     </div>
     <form action="" method="POST">
         {{personRegistration.csrf_token}}
         <div class="form-row col-md-12">
-            <div class="form-group col-md-4">
-                <label for="name">Nome</label> {{personRegistration.name(class="form-control", placeholder="Nome")}}
-                <!--<input type="text" class="form-control" id="name" name="name" placeholder="Nome">-->
-            </div>
-            <div class="form-group col-md-3">
-                <label for="username">Usuário</label> {{personRegistration.username(class="form-control", placeholder="Usuário")}}
-                <!--<input type="text" class="form-control" id="username" name="username">-->
-            </div>
-            <div class="form-group col-md-3">
-                <label for="password">Senha</label> {{personRegistration.password(class="form-control", placeholder="Senha")}}
-                <!--<input type="password" class="form-control" id="password" name="password">-->
-            </div>
-        </div>
-        <div class="form-group col-10">
-            <label for="email">E-Mail</label> {{personRegistration.email(class="form-control", placeholder="seu.email@seu.dominio")}}
-            <!--<input type="email" class="form-control" id="email" name="email" placeholder="seu.email@domino.com">-->
-        </div>
+            <br>
+            <div class="content">
+                <div class="tab-pane container active">
+                    <!--Identification-->
+                    <h4 style="color:rgb(121, 123, 132)">Identificação</h4>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="form-group col-md-4">
+                            <label for="radioTypeDocument">Tipo de Pessoa</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="document_type" id="cpf" value="1" onclick="alterLabel();" checked>
+                                <label class="form-check-label" for="cpf">
+                                    Pessoa Física
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="document_type" id="cnpj" value="2" onclick="alterLabel();">
+                                <label class="form-check-label" for="cnpj">
+                                    Pessoa Jurídica
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label id="inpDoc" for="InputDocument">CPF</label><span style="color: red"> *</span>
+                            <input type="text" name="document" class="form-control form-control-user border-bottom-danger" id="InputDocument">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="InputIdentification_card">Identidade</label>
+                            <input type="text" name="identification_card" class="form-control form-control-user border-bottom-danger" id="InputIdentification_card">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-md-5 ">
+                            <label for="first_name ">Nome</label><span style="color: red"> *</span> {{personRegistration.first_name(class="form-control ", placeholder="Nome ")}}
+                        </div>
+                        <div class="form-group col-md-7 ">
+                            <label for="second_name ">Sobrenome</label><span style="color: red"> *</span> {{personRegistration.second_name(class="form-control ", placeholder="Sobrenome ")}}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label for="InputBirthDay">Dt. Nascimento</label>
+                            <input type="date" name="birth_day" class="form-control form-control-user  border-bottom-danger" id="InputBirthDay">
+                            <span class="text-danger"></span>
+                        </div>
 
-        <button type="submit" class="btn btn-primary" style="position: relative; margin:20px 0 0 840px">Salvar</button>
+                        <div class="col-sm-5">
+                            <label for="InputNickname">Apelido</label>
+                            <input type="text" name="nickname" class="form-control form-control-user border-bottom-danger" id="InputNickname">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br><br>
+                    <!--Parents-->
+                    <h4 style="color:rgb(121, 123, 132)">Filiação</h4>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label for="InputFather">Pai</label>
+                            <input type="text" name="InputFather" class="form-control form-control-user border-bottom-danger" id="InputFather">
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="InputMother">Mãe</label>
+                            <input type="text" name="InputMother" class="form-control form-control-user border-bottom-danger" id="InputMother">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br><br>
+                    <!--Contatos-->
+                    <h4 style="color:rgb(121, 123, 132)">Contatos</h4>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="form-group col-md-2 ">
+                            <label for="phone_number ">Telefone</label> {{personRegistration.phone_number(class="form-control ", placeholder="Telefone", maxlength="10")}}
+                        </div>
+                        <div class="form-group col-md-2 ">
+                            <label for="cellphone_number ">Celular</label><span style="color: red"> *</span> {{personRegistration.cellphone_number(class="form-control ", placeholder="Celular", maxlength="11")}}
+                        </div>
+                        <div class="form-group col-8 ">
+                            <label for="email ">E-Mail</label><span style="color: red"> *</span> {{personRegistration.email(class="form-control ", placeholder="seu.email@seu.dominio", maxlength="120")}}
+                            <!--<input type="email " class="form-control " id="email " name="email " placeholder="seu.email@domino.com ">-->
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane container">
+                    <br>
+                    <!--Address-->
+                    <h4 style="color:rgb(121, 123, 132)">Endereço</h4>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <label for="InputPostalCode">CEP</label>
+                            <input type="text" name="postal_code" class="form-control form-control-user border-bottom-danger" id="InputPostalCode">
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-5">
+                            <label for="InputStreet">Rua</label>
+                            <input type="text" name="street" class="form-control form-control-user border-bottom-danger" id="InputStreet">
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="InputNumber">Número</label>
+                            <input type="number" name="number" class="form-control form-control-user border-bottom-danger" id="InputNumber" max="999999" min="0">
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="InputCellPhone">Complemento</label>
+                            <input type="text" name="complement" class="form-control form-control-user  border-bottom-danger" id="InputComplement">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label for="InputNeighborhood">Bairro</label>
+                            <input type="text" name="neighborhood" class="form-control form-control-user border-bottom-danger" @endif id="InputNeighborhood">
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="InputCity">Cidade</label>
+                            <input type="text" name="city" class="form-control form-control-user border-bottom-danger" id="InputCity">
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="InputState">Estado</label>
+                            <input type="text" name="state" class="form-control form-control-user border-bottom-danger" id="InputState">
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="InputCountry">País</label>
+                            <input type="text" name="country" class="form-control form-control-user" id="InputCountry">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                            Salvar
+                        </button>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <button type="button" class="btn btn-danger btn-user btn-block">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--<button type="submit " class="btn btn-primary " style="position: relative; margin:20px 0 0 840px ">Salvar</button>-->
     </form>
 </main>
+
+<script>
+    $(document).ready(function() {
+        alterLabel();
+    });
+
+    function alterLabel() {
+        var choice = getRadioValue('document_type');
+        if (choice == "1") {
+            $('#inpDoc').text("CPF");
+        } else {
+            $('#inpDoc').text("CNPJ");
+        }
+    }
+
+    function getRadioValue(name) {
+        var rads = document.getElementsByName('document_type');
+
+        for (var i = 0; i < rads.length; i++) {
+            if (rads[i].checked) {
+                return rads[i].value;
+            }
+        }
+        return null;
+    }
+</script>
 {%endblock%}

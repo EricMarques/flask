@@ -65,3 +65,88 @@ class Person(db.Model):
 
     def __repr__(self):
         return 'Person: ' + self.first_name + ' ' + self.second_name
+
+
+class BloodType(db.Model):
+    __tablename__ = 'blood_types'
+
+    id = db.Column(db.Integer, primary_key = True)
+    #Blood Type
+    blood_type = db.Column(db.String(7), unique = True, nullable = False)  #Blood Type
+
+    def __init__(self, blood_type):
+        self.blood_type = blood_type
+    
+    def __repr__(self):
+        return 'Blood Type: ' + self.blood_type
+
+
+class PersonBloodType(db.Model):
+    __tablename__ = 'person_blood_types'
+
+    id = db.Column(db.Integer, primary_key = True)
+    person_id = db.Column(db.Integer, db.ForeignKey('person.id'), nullable = False)  #Person id
+    blood_type_id = db.Column(db.Integer, db.ForeignKey('blood_types.id'), nullable = False)  #Blood type id
+
+    person = db.relationship('Person', foreign_keys = person_id)
+    blood_type = db.relationship('BloodType', foreign_keys = blood_type_id)
+
+    def __init__(self, person_id, blood_type_id):
+        self.person = person_id
+        self.blood_type = blood_type_id
+
+
+class  Ethnicitie(db.Model):
+    __tablename__ = 'ethnicities'
+    #Ethnicitie
+    id = db.Column(db.Integer, primary_key = True)
+    ethnicity = db.Column(db.String(14), nullable = False)  #Ethnicity
+
+    def __init__(self, ethnicitie):
+        self.ethnicity = ethnicitie
+
+    def __repr__(self):
+        return 'Ethnicitie: ' + self.ethnicity
+        
+
+class PersonEthnicity(db.Model):
+    __tablename__ = 'person_ethnicities'
+
+    id = db.Column(db.Integer, primary_key = True)
+    person_id = db.Column(db.Integer, db.ForeignKey('person.id'), nullable = False)  #Person id
+    ethnicitie_id = db.Column(db.Integer, db.ForeignKey('ethnicities.id'), nullable = False)  #Ethnicitie id
+
+    person = db.relationship('Person', foreign_keys = person_id)
+    ethnicitie = db.relationship('Ethnicitie', foreign_keys = ethnicitie_id)
+
+    def __init__(self, person_id, ethnicitie_id):
+        self.person_id = person_id
+        self.ethnicitie_id = ethnicitie_id
+
+
+class Religion(db.Model):
+    __tablename__ = 'religions'
+    #Religion
+    id = db.Column(db.Integer, primary_key = True)
+    religion = db.Column(db.String(50), nullable = False)  #Religion
+
+    def __init__(self, religion):
+        self.religion = religion
+    
+    def __repr__(self):
+        return 'Religion: ' + self.religion
+
+
+class PersonReligion(db.Model):
+    __tablename__ = 'person_religion'
+
+    id = db.Column(db.Integer, primary_key = True)
+    person_id = db.Column(db.Integer, db.ForeignKey('person.id'), nullable = False)  #Person id
+    religion_id = db.Column(db.Integer, db.ForeignKey('religions.id'), nullable = False)  #Religion id
+
+    person = db.relationship('Person', foreign_keys = person_id)
+    religion = db.relationship('Religion', foreign_keys = religion_id)
+
+    def __init__(self, person_id, religion_id):
+        self.person_id = person_id
+        self.religion_id = religion_id
