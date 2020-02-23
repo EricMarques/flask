@@ -50,17 +50,20 @@ def Person():
     state = personRegistration.state.data  #State
     country = personRegistration.country.data  #Country
 
+    #Observations
+    observations = personRegistration.observations.data
+
     #Action DateTime
     created_at = datetime.now()  #Created at
     updated_at = None  #Updated at  #Deleted(soft delete)
     deleted = 0  #Deleted(soft delete)
     deleted_at = None  #Deleted at(soft delete)
     if personRegistration.validate_on_submit():
-        new_person = Person(document_type=document_type, registration_card=registration_card, first_name=first_name, second_name=second_name, birth_day=birth_day, nick_name=nick_name, identification=identification, father_name=father_name, mother_name=mother_name, email=email, phone_number=phone_number, cellphone_number=cellphone_number, postal_code=postal_code, street=street, number=number, complement=complement, neighborhood=neighborhood, city=city, state=state, country=country, created_at=created_at, updated_at=updated_at, deleted=deleted, deleted_at=deleted_at)
+        new_person = Person(document_type=document_type, registration_card=registration_card, first_name=first_name, second_name=second_name, birth_day=birth_day, nick_name=nick_name, identification=identification, father_name=father_name, mother_name=mother_name, email=email, phone_number=phone_number, cellphone_number=cellphone_number, postal_code=postal_code, street=street, number=number, complement=complement, neighborhood=neighborhood, city=city, state=state, country=country, observations=observations, created_at=created_at, updated_at=updated_at, deleted=deleted, deleted_at=deleted_at)
         db.session.add(new_person)
         db.session.commit()
 
-        print('document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, created_at, updated_at, deleted, deleted_at))
+        print('document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
 
         return redirect('/personRegister')
     else:

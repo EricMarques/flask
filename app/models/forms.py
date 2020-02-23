@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, RadioField, DateField
+from wtforms import StringField, PasswordField, BooleanField, RadioField, DateField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 
 
@@ -10,27 +10,34 @@ class LoginForm(FlaskForm):
 
 class PersonRegistrationForm(FlaskForm):
     #Person Identification
-    document_type = RadioField("document_type")
-    registration_card = StringField("registration_card", validators=[DataRequired()])
-    first_name = StringField("first_name", validators=[DataRequired()])
-    second_name = StringField("second_name", validators=[DataRequired()])
-    birth_day = DateField("birth_day")
-    nick_name = StringField("nick_name")
-    identification = StringField("identification")
-    father_name = StringField("father_name")
-    mother_name = StringField("mother_name")
+    document_type = RadioField("Tipo de Pessoa", choices=[(1,'Pessoa Física'), (0, 'Pessoa Jurídica')], default=1)
+    registration_card = StringField("", validators=[DataRequired()])
+    first_name = StringField("Nome", validators=[DataRequired()])
+    second_name = StringField("Sobrenome", validators=[DataRequired()])
+    birth_day = DateField("Dt. Nascimento")
+    nick_name = StringField("Apelido")
+    identification = StringField("Identidade")
+    father_name = StringField("Nome do pai")
+    mother_name = StringField("Nome da mãe")
 
     #Contact
-    email = StringField("email", validators=[DataRequired()])
-    phone_number = StringField("phone_number")
-    cellphone_number = StringField("cellphone_number", validators=[DataRequired()])
+    email = StringField("E-mail", validators=[DataRequired()], description="seu.email@seu.dominio")
+    phone_number = StringField("Telefone")
+    cellphone_number = StringField("Celular", validators=[DataRequired()])
 
     #Address
-    postal_code = StringField("postal_code")
-    street = StringField("street")
-    number = StringField("number")
-    complement = StringField("complement")
-    neighborhood = StringField("neighborhood")
-    city = StringField("city")
-    state = StringField("state")
-    country = StringField("country")
+    postal_code = StringField("CEP")
+    street = StringField("Logradouro")
+    number = StringField("Número")
+    complement = StringField("Complemento")
+    neighborhood = StringField("Bairro")
+    city = StringField("Cidade")
+    state = StringField("Estado")
+    country = StringField("País")
+
+    #Observations
+    observations = TextAreaField("Observações")
+
+    #Buttons
+    submit = SubmitField("Salvar")
+    cancel = SubmitField("Cancelar")

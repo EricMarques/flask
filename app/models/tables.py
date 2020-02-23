@@ -31,13 +31,16 @@ class Person(db.Model):
     state = db.Column(db.String(50), nullable = True, default = None)  #State
     country = db.Column(db.String(50), nullable = True, default = None)  #Country
 
+    #Observations
+    observations = db.Column(db.String(500), nullable = True, default = None)  #Observations
+
     #Action DateTime
     created_at = db.Column(db.DateTime, nullable = False, default = datetime.utcnow())  #Created at
     updated_at = db.Column(db.DateTime, nullable = True, default = None)  #Updated at
     deleted = db.Column(db.Boolean, default = 0)  #Deleted(soft delete)
     deleted_at = db.Column(db.DateTime, nullable = True, default = None)  #Deleted at(soft delete)
 
-    def __init__(self, document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, created_at, updated_at, deleted, deleted_at):
+    def __init__(self, document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at):
         self.document_type = document_type
         self.registration_card = registration_card
         self.first_name = first_name
@@ -58,6 +61,7 @@ class Person(db.Model):
         self.city = city
         self.state = state
         self.country = country
+        self.observations = observations
         self.created_at = created_at
         self.updated_at = updated_at
         self.deleted = deleted
