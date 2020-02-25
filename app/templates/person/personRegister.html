@@ -16,7 +16,7 @@
                     <div class="form-group row">
                         <div class="form-group col-md-4">
                             <!--Verificar se tem como retirar pontos na frente das opções-->
-                            {{personRegistration.document_type.label}} {{personRegistration.document_type()}}
+                            {{personRegistration.document_type.label}} {{personRegistration.document_type(onclick="alterLabel();")}} {{ personRegistration.document_type.key }}
 
                             <!--<div class="form-check">
                                 <input class="form-check-input" type="radio" name="document_type" id="cpf" value="1" onclick="alterLabel();" checked>
@@ -32,12 +32,12 @@
                             </div>-->
                         </div>
                         <div class="col-sm-4">
-                            <!--Fazer SCRIPT para alterar Label CPF/CNPJ de acordo com radio button-->
-                            {{personRegistration.registration_card.label('CPF')}}<span style="color: red"> *</span>{{personRegistration.registration_card(class="form-control", placeholder="CPF/CNPJ", maxlength="15")}}
+                            {{personRegistration.registration_card.label("CPF", id="registration_card")}}<span style="color: red"> *</span>{{personRegistration.registration_card(class="form-control", placeholder="CPF/CNPJ", maxlength="15")}}
                         </div>
                         <div class="col-sm-4">
-                            {{personRegistration.identification.label}} {{personRegistration.identification(class="form-control", placeholder="Identidade")}}
+                            {{personRegistration.identification.label}} {{personRegistration.identification(class="form-control", placeholder="Identidade", maxlength="20")}}
                         </div>
+                        {{personRegistration.language}}
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-5 ">
@@ -50,12 +50,11 @@
                     <div class="form-group row">
                         <div class="col-sm-4">
                             <!--Inserir type='date' para que campo seja informado como data-->
-                            {{personRegistration.birth_day.label}} {{personRegistration.birth_day(class="form-control form-control-user border-bottom-danger")}}
-                            <!--<input type="date" name="birth_day" class="form-control form-control-user  border-bottom-danger" id="InputBirthDay">
-                            <span class="text-danger"></span>-->
+                            <!--{{personRegistration.birth_day.label}} {{personRegistration.birth_day(class="form-control form-control-user border-bottom-danger", maxlength="8")}}-->
+                            <input type="date" name="birth_day" class="form-control form-control-user  border-bottom-danger" id="InputBirthDay" maxlength="8">
                         </div>
                         <div class="col-sm-5">
-                            {{personRegistration.nick_name.label}} {{personRegistration.nick_name(class="form-control")}}
+                            {{personRegistration.nick_name.label}} {{personRegistration.nick_name(class="form-control", maxlength="20")}}
                         </div>
                     </div>
                     <br><br>
@@ -64,10 +63,10 @@
                     <hr>
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            {{personRegistration.father_name.label}} {{personRegistration.father_name(class="form-control")}}
+                            {{personRegistration.father_name.label}} {{personRegistration.father_name(class="form-control", maxlength="100")}}
                         </div>
                         <div class="col-sm-6">
-                            {{personRegistration.mother_name.label}} {{personRegistration.mother_name(class="form-control")}}
+                            {{personRegistration.mother_name.label}} {{personRegistration.mother_name(class="form-control", maxlength="100")}}
                         </div>
                     </div>
                     <br><br>
@@ -82,7 +81,12 @@
                             {{personRegistration.cellphone_number.label}}<span style="color: red"> *</span> {{personRegistration.cellphone_number(class="form-control ", placeholder="Celular", maxlength="11")}}
                         </div>
                         <div class="form-group col-8 ">
-                            {{personRegistration.email.label}}<span style="color: red"> *</span> {{personRegistration.email(class="form-control ", maxlength="120")}}
+                            {{personRegistration.email.label}}<span style="color: red"> *</span> {{personRegistration.email(class="form-control ", maxlength="120", placeholder="seu.email@seu.dominio")}} {% for error in personRegistration.email.errors
+                            %}
+                            <ul>
+                                <li class="text-danger"><span>{{error}}</span>{% endfor %}</li>
+                            </ul>
+
                             <!--<input type="email " class="form-control " id="email " name="email " placeholder="seu.email@domino.com ">-->
                         </div>
                     </div>
@@ -94,37 +98,37 @@
                     <hr>
                     <div class="form-group row">
                         <div class="col-sm-2">
-                            {{personRegistration.postal_code.label}} {{personRegistration.postal_code(class="form-control")}}
+                            {{personRegistration.postal_code.label}} {{personRegistration.postal_code(class="form-control", maxlength="8")}}
                         </div>
                         <div class="col-sm-5">
-                            {{personRegistration.street.label}} {{personRegistration.street(class="form-control")}}
+                            {{personRegistration.street.label}} {{personRegistration.street(class="form-control", maxlength="50")}}
                         </div>
                         <div class="col-sm-2">
-                            {{personRegistration.number.label}} {{personRegistration.number(class="form-control")}}
+                            {{personRegistration.number.label}} {{personRegistration.number(class="form-control", maxlength="10")}}
                         </div>
                         <div class="col-sm-3">
-                            {{personRegistration.complement.label}} {{personRegistration.complement(class="form-control")}}
+                            {{personRegistration.complement.label}} {{personRegistration.complement(class="form-control", maxlength="50")}}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-3">
-                            {{personRegistration.neighborhood.label}} {{personRegistration.neighborhood(class="form-control")}}
+                            {{personRegistration.neighborhood.label}} {{personRegistration.neighborhood(class="form-control", maxlength="50")}}
                         </div>
                         <div class="col-sm-4">
-                            {{personRegistration.city.label}} {{personRegistration.city(class="form-control")}}
+                            {{personRegistration.city.label}} {{personRegistration.city(class="form-control", maxlength="50")}}
                         </div>
                         <div class="col-sm-3">
-                            {{personRegistration.state.label}} {{personRegistration.state(class="form-control")}}
+                            {{personRegistration.state.label}} {{personRegistration.state(class="form-control", maxlength="50")}}
                         </div>
                         <div class="col-sm-2">
-                            {{personRegistration.country.label}} {{personRegistration.country(class="form-control")}}
+                            {{personRegistration.country.label}} {{personRegistration.country(class="form-control", maxlength="40")}}
                         </div>
                     </div>
                     <!--Observations-->
                     <!--Verificar alteração de tamanho do campo text field-->
                     <div class="form-group row">
                         <div class="col-sm-3">
-                            {{personRegistration.observations.label}}{{personRegistration.observations(class="form-control")}}
+                            {{personRegistration.observations.label}}{{personRegistration.observations(class="form-control", maxlength="400")}}
                         </div>
                     </div>
                     <br>
@@ -152,10 +156,10 @@
 
     function alterLabel() {
         var choice = getRadioValue('document_type');
-        if (choice == "1") {
-            $('#inpDoc').text("CPF");
+        if (choice == 0) {
+            $('#registration_card').text("CPF");
         } else {
-            $('#inpDoc').text("CNPJ");
+            $('#registration_card').text("CNPJ");
         }
     }
 

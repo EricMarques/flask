@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, RadioField, DateField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Email, Length
 
 
 class LoginForm(FlaskForm):
@@ -10,33 +10,33 @@ class LoginForm(FlaskForm):
 
 class PersonRegistrationForm(FlaskForm):
     #Person Identification
-    document_type = RadioField("Tipo de Pessoa", choices=[(1,'Pessoa Física'), (0, 'Pessoa Jurídica')], default=1)
-    registration_card = StringField("", validators=[DataRequired()])
+    document_type = RadioField("Tipo de Pessoa", choices=[(0,'Pessoa Física'), (1, 'Pessoa Jurídica')], validators=False, default = 0)
+    registration_card = StringField("", validators=[DataRequired(), Length(max=15)])
     first_name = StringField("Nome", validators=[DataRequired()])
     second_name = StringField("Sobrenome", validators=[DataRequired()])
-    birth_day = DateField("Dt. Nascimento")
-    nick_name = StringField("Apelido")
-    identification = StringField("Identidade")
-    father_name = StringField("Nome do pai")
-    mother_name = StringField("Nome da mãe")
+    birth_day = DateField("Dt. Nascimento", default=None)
+    nick_name = StringField("Apelido", validators=[Length(max=20)], default=None)
+    identification = StringField("Identidade", validators=[Length(max=20)], default=None)
+    father_name = StringField("Nome do pai", validators=[Length(max=100)], default=None)
+    mother_name = StringField("Nome da mãe", validators=[Length(max=100)], default=None)
 
     #Contact
-    email = StringField("E-mail", validators=[DataRequired()], description="seu.email@seu.dominio")
-    phone_number = StringField("Telefone")
-    cellphone_number = StringField("Celular", validators=[DataRequired()])
+    email = StringField("E-mail", validators=[DataRequired(), Email(message="Formato de e-mail incorreto!")])
+    phone_number = StringField("Telefone", validators=[Length(max=10)], default=None)
+    cellphone_number = StringField("Celular", validators=[DataRequired(), Length(max=11)])
 
     #Address
-    postal_code = StringField("CEP")
-    street = StringField("Logradouro")
-    number = StringField("Número")
-    complement = StringField("Complemento")
-    neighborhood = StringField("Bairro")
-    city = StringField("Cidade")
-    state = StringField("Estado")
-    country = StringField("País")
+    postal_code = StringField("CEP", validators=[Length(max=8)], default=None)
+    street = StringField("Logradouro", validators=[Length(max=50)], default=None)
+    number = StringField("Número", validators=[Length(max=10)], default=None)
+    complement = StringField("Complemento", validators=[Length(max=50)], default=None)
+    neighborhood = StringField("Bairro", validators=[Length(max=50)], default=None)
+    city = StringField("Cidade", validators=[Length(max=50)], default=None)
+    state = StringField("Estado", validators=[Length(max=50)], default=None)
+    country = StringField("País", validators=[Length(max=40)], default=None)
 
     #Observations
-    observations = TextAreaField("Observações")
+    observations = TextAreaField("Observações", validators=[Length(max=400)], default=None)
 
     #Buttons
     submit = SubmitField("Salvar")

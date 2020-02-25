@@ -25,7 +25,9 @@ def login():
 def Person():
     personRegistration = PersonRegistrationForm()
     #Person Identification
-    document_type = personRegistration.document_type.data  #0 - PF || 1 - PJ
+    document_type = str(personRegistration.document_type.data)  #0 - PF || 1 - PJ
+    print('Type: {}' .format(type(personRegistration.document_type.data)))
+    print('DT: {}' .format(type(document_type)))
     registration_card = personRegistration.registration_card.data  #CPF/CNPJ
     first_name = personRegistration.first_name.data  #Name
     second_name = personRegistration.second_name.data  #Second name
@@ -34,7 +36,6 @@ def Person():
     identification =  personRegistration.identification.data  #Identification
     father_name = personRegistration.father_name.data  #Father name
     mother_name = personRegistration.mother_name.data  #Mother name
-
     #Contact
     email = personRegistration.email.data  #E-mail
     phone_number = personRegistration.phone_number.data  #Phone
@@ -58,14 +59,18 @@ def Person():
     updated_at = None  #Updated at  #Deleted(soft delete)
     deleted = 0  #Deleted(soft delete)
     deleted_at = None  #Deleted at(soft delete)
+
+    print('1 - document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
+
+
     if personRegistration.validate_on_submit():
         new_person = Person(document_type=document_type, registration_card=registration_card, first_name=first_name, second_name=second_name, birth_day=birth_day, nick_name=nick_name, identification=identification, father_name=father_name, mother_name=mother_name, email=email, phone_number=phone_number, cellphone_number=cellphone_number, postal_code=postal_code, street=street, number=number, complement=complement, neighborhood=neighborhood, city=city, state=state, country=country, observations=observations, created_at=created_at, updated_at=updated_at, deleted=deleted, deleted_at=deleted_at)
         db.session.add(new_person)
         db.session.commit()
 
-        print('document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
+        print(2 - 'document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
 
-        return redirect('/personRegister')
+        return redirect('../templates/index.html')
     else:
         print(personRegistration.errors)
 
