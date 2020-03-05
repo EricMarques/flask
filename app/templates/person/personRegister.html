@@ -5,7 +5,7 @@
         <br>
     </div>
     <form action="" method="POST">
-        {{personRegistration.csrf_token}}
+        {{personRegistration.csrf_token}} {{personRegistration.hidden_tag()}}
         <div class="form-row col-md-12">
             <br>
             <div class="content">
@@ -16,8 +16,12 @@
                     <div class="form-group row">
                         <div class="form-group col-md-4">
                             <!--Verificar se tem como retirar pontos na frente das opções-->
-                            {{personRegistration.document_type.label}} {{personRegistration.document_type(onclick="alterLabel();")}}
-
+                            {{personRegistration.document_type.label}}
+                            <!--{{personRegistration.document_type.label}}-->{%for radios in personRegistration.document_type%}
+                            <div>
+                                {{radios(onclick="alterLabel();")}} {{radios.label}}
+                            </div>
+                            {%endfor%}
                             <!--<div class="form-check">
                                 <input class="form-check-input" type="radio" name="document_type" id="cpf" value="1" onclick="alterLabel();" checked>
                                 <label class="form-check-label" for="cpf">

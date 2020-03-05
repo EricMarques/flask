@@ -9,14 +9,10 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('remember_me')
 
 
-class PersonRegistrationForm(FlaskForm):
-    choices = [('0', 'Pessoa Física'),
-               ('1', 'Pessoa Jurídica')]
+class PersonRegistrationForm(FlaskForm):    
     #Person Identification
-    document_type = RadioField('Tipo de Pessoa', choices=choices, validators=False, default = '0', coerce=int)
-    print('*****')
-    print(document_type)
-    print('*****')
+    document_type = RadioField('Tipo de Pessoa', choices=[(0, 'Pessoa Física'),
+               (1, 'Pessoa Jurídica')], validators=False, default = 0, coerce=int)
     registration_card = StringField('', validators=[DataRequired(), Length(max=15)])
     first_name = StringField('Nome', validators=[DataRequired()])
     second_name = StringField('Sobrenome', validators=[DataRequired()])

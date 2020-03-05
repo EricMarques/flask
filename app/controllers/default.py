@@ -34,13 +34,6 @@ def Person():
     personRegistration = PersonRegistrationForm()
     #Person Identification
     document_type = personRegistration.document_type.data  #0 - PF || 1 - PJ
-    #if request.method == 'POST':
-    #    document_type = int(request.form['document_type'])
-    #    print('Estou aki\n' .format(document_type))
-    #    print('Passei aki')
-    print('\nType: {}' .format(type(personRegistration.document_type.data)))
-    print('DT: {}' .format(type(document_type)))
-    print('Value: {}\n' .format(personRegistration.document_type.data))
     registration_card = personRegistration.registration_card.data  #CPF/CNPJ
     first_name = personRegistration.first_name.data  #Name
     second_name = personRegistration.second_name.data  #Second name
@@ -73,15 +66,20 @@ def Person():
     deleted = 0  #Deleted(soft delete)
     deleted_at = None  #Deleted at(soft delete)
 
-    print('=> Fields - document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
+    print('NO MÉTODO => Fields - document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
 
 
     if personRegistration.validate_on_submit():
+        print('ANTES DE SALVAR => Fields - document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
+
         new_person = Person(document_type=document_type, registration_card=registration_card, first_name=first_name, second_name=second_name, birth_day=birth_day, nick_name=nick_name, identification=identification, father_name=father_name, mother_name=mother_name, email=email, phone_number=phone_number, cellphone_number=cellphone_number, postal_code=postal_code, street=street, number=number, complement=complement, neighborhood=neighborhood, city=city, state=state, country=country, observations=observations, created_at=created_at, updated_at=updated_at, deleted=deleted, deleted_at=deleted_at)
+
+        new = Person(document_type=document_type,)
+
         db.session.add(new_person)
         db.session.commit()
 
-        print('<==> OTHER FIELDS:\ndocument_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
+        print('DEPOIS DE SALVAR => OTHER FIELDS:\ndocument_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
 
         return redirect('../templates/index.html')
     else:
