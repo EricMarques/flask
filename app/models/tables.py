@@ -6,7 +6,7 @@ class Person(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     #Person Identification
-    document_type = db.Column(db.Boolean, nullable = False, default = 0)  #0 - PF || 1 - PJ
+    document_type = db.Column(db.Integer, nullable = False, default = 0)  #0 - PF || 1 - PJ
     registration_card = db.Column(db.String(15), unique = True, nullable = False)  #CPF/CNPJ
     first_name = db.Column(db.String(50), nullable = False)  #Name
     second_name = db.Column(db.String(100), nullable = False)  #Second name
@@ -82,7 +82,7 @@ class BloodType(db.Model):
         self.blood_type = blood_type
     
     def __repr__(self):
-        return 'Blood Type: ' + self.blood_type
+        return self.blood_type
 
 
 class PersonBloodType(db.Model):

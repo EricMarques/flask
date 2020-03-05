@@ -2,8 +2,8 @@ from flask import render_template, request, redirect
 from app import app, db
 from datetime import datetime
 
-from app.models.tables import Person
-from app.models.forms import LoginForm, PersonRegistrationForm
+from app.models.tables import Person, BloodType
+from app.models.forms import LoginForm, PersonRegistrationForm, BloodTypeForm
 
 
 @app.route('/index')
@@ -21,13 +21,26 @@ def login():
         print(login.errors)
     return render_template('login.html', login=login)
 
-@app.route('/personRegister', methods=['GET', 'POST'])
+
+@app.route('/test', methods=['GET'])
+def Blood():
+    bloodType = BloodTypeForm()
+    blood_Type = BloodType.query.filter_by().all()
+    
+    return render_template('test.html',bloodType=blood_Type)
+
+@app.route('/personRegister', methods=['POST', 'GET', 'PUT'])
 def Person():
     personRegistration = PersonRegistrationForm()
     #Person Identification
-    document_type = str(personRegistration.document_type.data)  #0 - PF || 1 - PJ
-    print('Type: {}' .format(type(personRegistration.document_type.data)))
+    document_type = personRegistration.document_type.data  #0 - PF || 1 - PJ
+    #if request.method == 'POST':
+    #    document_type = int(request.form['document_type'])
+    #    print('Estou aki\n' .format(document_type))
+    #    print('Passei aki')
+    print('\nType: {}' .format(type(personRegistration.document_type.data)))
     print('DT: {}' .format(type(document_type)))
+    print('Value: {}\n' .format(personRegistration.document_type.data))
     registration_card = personRegistration.registration_card.data  #CPF/CNPJ
     first_name = personRegistration.first_name.data  #Name
     second_name = personRegistration.second_name.data  #Second name
@@ -60,7 +73,7 @@ def Person():
     deleted = 0  #Deleted(soft delete)
     deleted_at = None  #Deleted at(soft delete)
 
-    print('1 - document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
+    print('=> Fields - document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
 
 
     if personRegistration.validate_on_submit():
@@ -68,13 +81,15 @@ def Person():
         db.session.add(new_person)
         db.session.commit()
 
-        print(2 - 'document_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
+        print('<==> OTHER FIELDS:\ndocument_type: {} -> registration_card: {} -> first_name: {} -> second_name: {} -> birth_day: {} -> nick_name: {} -> identification: {} -> father_name: {} -> mother_name: {} -> email: {} -> phone_number: {} -> cellphone_number: {} -> postal_code: {} -> street: {} -> number: {} -> complement: {} -> neighborhood: {} -> city: {} -> state: {} -> country: {} -> observations: {} -> created_at: {} -> updated_at: {} -> deleted: {} -> deleted_at: {}'.format(document_type, registration_card, first_name, second_name, birth_day, nick_name, identification, father_name, mother_name, email, phone_number, cellphone_number, postal_code, street, number, complement, neighborhood, city, state, country, observations, created_at, updated_at, deleted, deleted_at))
 
         return redirect('../templates/index.html')
     else:
+        #return personRegistration.errors
         print(personRegistration.errors)
-
+    
     return render_template('person/personRegister.html', personRegistration = personRegistration)
+
 
 '''
 *****************

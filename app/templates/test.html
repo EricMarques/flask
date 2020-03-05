@@ -1,2 +1,4 @@
-oi {% block content%}
-<input type="text" name="" id="" value="{{ name }}" readonly> {% endblock %}
+{%extends 'base.html'%}{%block title%}{{super()}} - Testes {%endblock%}{%block content%} {{bloodType.csrf_token}}
+<h1>Blood Type</h1> {%for bloodType in bloodType%}
+<li>{{bloodType}}</li>
+{%endfor%} {%endblock%}
