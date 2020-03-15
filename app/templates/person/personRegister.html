@@ -41,7 +41,6 @@
                         <div class="col-sm-4">
                             {{personRegistration.identification.label}} {{personRegistration.identification(class="form-control", placeholder="Identidade", maxlength="20")}}
                         </div>
-                        {{personRegistration.language}}
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-md-5 ">
@@ -53,9 +52,8 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-4">
-                            <!--Inserir type='date' para que campo seja informado como data-->
-                            <!--{{personRegistration.birth_day.label}} {{personRegistration.birth_day(class="form-control form-control-user border-bottom-danger", maxlength="8")}}-->
-                            <input type="date" name="birth_day" class="form-control form-control-user  border-bottom-danger" id="InputBirthDay" maxlength="8">
+                            {{personRegistration.birth_day.label}} {{personRegistration.birth_day(class="form-control form-control-user border-bottom-danger", maxlength="8")}}
+                            <!--<input type="date" name="birth_day" class="form-control form-control-user  border-bottom-danger" id="InputBirthDay" maxlength="8">-->
                         </div>
                         <div class="col-sm-5">
                             {{personRegistration.nick_name.label}} {{personRegistration.nick_name(class="form-control", maxlength="20")}}

@@ -1,12 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, RadioField, DateField, SubmitField, TextAreaField, SelectField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms import StringField, PasswordField, BooleanField, RadioField, SubmitField, TextAreaField, SelectField
+from wtforms.validators import DataRequired, Email, Length, Optional
+from wtforms.fields.html5 import DateField, EmailField, TelField
+from datetime import date
 
 
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
     remember_me = BooleanField('remember_me')
+    submit = SubmitField('Salvar')
 
 
 class PersonRegistrationForm(FlaskForm):    
@@ -16,16 +19,16 @@ class PersonRegistrationForm(FlaskForm):
     registration_card = StringField('', validators=[DataRequired(), Length(max=15)])
     first_name = StringField('Nome', validators=[DataRequired()])
     second_name = StringField('Sobrenome', validators=[DataRequired()])
-    birth_day = DateField('Dt. Nascimento', default=None)
+    birth_day = DateField('Dt. Nascimento', validators=(Optional(),), default=None)
     nick_name = StringField('Apelido', validators=[Length(max=20)], default=None)
     identification = StringField('Identidade', validators=[Length(max=20)], default=None)
     father_name = StringField('Nome do pai', validators=[Length(max=100)], default=None)
     mother_name = StringField('Nome da mãe', validators=[Length(max=100)], default=None)
 
     #Contact
-    email = StringField('E-mail', validators=[DataRequired(), Email(message='Formato de e-mail incorreto!')])
-    phone_number = StringField('Telefone', validators=[Length(max=10)], default=None)
-    cellphone_number = StringField('Celular', validators=[DataRequired(), Length(max=11)])
+    email = EmailField('E-mail', validators=[DataRequired(), Email(message='Formato de e-mail incorreto!')])
+    phone_number = TelField('Telefone', validators=[Length(max=10)], default=None)
+    cellphone_number = TelField('Celular', validators=[DataRequired(), Length(max=11)])
 
     #Address
     postal_code = StringField('CEP', validators=[Length(max=8)], default=None)
@@ -47,3 +50,14 @@ class PersonRegistrationForm(FlaskForm):
 
 class BloodTypeForm(FlaskForm):
     blood_t = SelectField("Tipo Sanguíneo", choices=[('1', '1'), ('2', '2')])
+
+
+class ReligionForm(FlaskForm):
+    #Religion
+    religion = StringField("Religião", validators=[DataRequired() ,Length(max=50)], default=None)
+    #Observations
+    observations = TextAreaField('Observações', validators=[Length(max=400)], default=None)
+    
+    #Buttons
+    submit = SubmitField('Salvar')
+    cancel = SubmitField('Cancelar')

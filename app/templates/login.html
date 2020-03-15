@@ -3,12 +3,12 @@
     <div class="col-md-4 col-md-offset-4" style="margin: 100px 0 0 360px;">
         <h2 style="margin-bottom: 10%;">Login</h2>
         <form action="" method="POST" style="margin-bottom: 43%;">
-            {{ login.csrf_token }}
+            {{ loginForm.csrf_token }}
             <div class="form-group">
-                <label for="username">Username: </label> {{login.username(class="form-control", placeholder="Usuário")}} {% if login.errors.username %}
+                <label for="username">Username: </label> {{loginForm.username(class="form-control", placeholder="Usuário")}} {% if loginForm.errors.username %}
                 <div class="alert alert-danger" role="alert">
                     <ul>
-                        {% for e in login.errors.username %}
+                        {% for e in loginForm.errors.username %}
                         <li>{{ e }}</li>
                         {% endfor %}
                     </ul>
@@ -16,10 +16,10 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                <label for="password">Password</label> {{login.password(class="form-control", placeholder="Senha")}} {% if login.errors.password %}
+                <label for="password">Password</label> {{loginForm.password(class="form-control", placeholder="Senha")}} {% if loginForm.errors.password %}
                 <div class="alert alert-danger" role="alert">
                     <ul>
-                        {% for e in login.errors.password %}
+                        {% for e in loginForm.errors.password %}
                         <li>{{ e }}</li>
                         {% endfor %}
                     </ul>
@@ -27,9 +27,9 @@
                 {% endif %}
             </div>
             <div class="checkbox">
-                <label for="remember_me">Remember me</label> {{login.remember_me()}}
+                <label for="remember_me">Remember me</label> {{loginForm.remember_me()}}
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            {{loginForm.submit(class="btn btn-primary btn-user btn-block")}}
         </form>
     </div>
 </main>{% endblock %}

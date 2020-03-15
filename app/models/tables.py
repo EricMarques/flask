@@ -85,21 +85,6 @@ class BloodType(db.Model):
         return self.blood_type
 
 
-class PersonBloodType(db.Model):
-    __tablename__ = 'person_blood_types'
-
-    id = db.Column(db.Integer, primary_key = True)
-    person_id = db.Column(db.Integer, db.ForeignKey('person.id'), nullable = False)  #Person id
-    blood_type_id = db.Column(db.Integer, db.ForeignKey('blood_types.id'), nullable = False)  #Blood type id
-
-    person = db.relationship('Person', foreign_keys = person_id)
-    blood_type = db.relationship('BloodType', foreign_keys = blood_type_id)
-
-    def __init__(self, person_id, blood_type_id):
-        self.person = person_id
-        self.blood_type = blood_type_id
-
-
 class  Ethnicitie(db.Model):
     __tablename__ = 'ethnicities'
     #Ethnicitie
@@ -113,44 +98,28 @@ class  Ethnicitie(db.Model):
         return 'Ethnicitie: ' + self.ethnicity
         
 
-class PersonEthnicity(db.Model):
-    __tablename__ = 'person_ethnicities'
-
-    id = db.Column(db.Integer, primary_key = True)
-    person_id = db.Column(db.Integer, db.ForeignKey('person.id'), nullable = False)  #Person id
-    ethnicitie_id = db.Column(db.Integer, db.ForeignKey('ethnicities.id'), nullable = False)  #Ethnicitie id
-
-    person = db.relationship('Person', foreign_keys = person_id)
-    ethnicitie = db.relationship('Ethnicitie', foreign_keys = ethnicitie_id)
-
-    def __init__(self, person_id, ethnicitie_id):
-        self.person_id = person_id
-        self.ethnicitie_id = ethnicitie_id
-
-
 class Religion(db.Model):
     __tablename__ = 'religions'
     #Religion
     id = db.Column(db.Integer, primary_key = True)
     religion = db.Column(db.String(50), nullable = False)  #Religion
 
-    def __init__(self, religion):
+    #Observations
+    observations = db.Column(db.String(500), nullable = True, default = None)  #Observations
+
+    #Action DateTime
+    created_at = db.Column(db.DateTime, nullable = False, default = datetime.utcnow())  #Created at
+    updated_at = db.Column(db.DateTime, nullable = True, default = None)  #Updated at
+    deleted = db.Column(db.Boolean, default = 0)  #Deleted(soft delete)
+    deleted_at = db.Column(db.DateTime, nullable = True, default = None)  #Deleted at(soft delete)
+
+    def __init__(self, religion, observations, created_at, updated_at, deleted, deleted_at):
         self.religion = religion
+        self.observations = observations
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.deleted = deleted
+        self.deleted_at = deleted_at
     
     def __repr__(self):
         return 'Religion: ' + self.religion
-
-
-class PersonReligion(db.Model):
-    __tablename__ = 'person_religion'
-
-    id = db.Column(db.Integer, primary_key = True)
-    person_id = db.Column(db.Integer, db.ForeignKey('person.id'), nullable = False)  #Person id
-    religion_id = db.Column(db.Integer, db.ForeignKey('religions.id'), nullable = False)  #Religion id
-
-    person = db.relationship('Person', foreign_keys = person_id)
-    religion = db.relationship('Religion', foreign_keys = religion_id)
-
-    def __init__(self, person_id, religion_id):
-        self.person_id = person_id
-        self.religion_id = religion_id

@@ -18,18 +18,18 @@
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">First Project Flask</a>
+        <a class="navbar-brand" href="{{ url_for('index')}}">Project Flask</a>
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('index')}}">Home</a>
-                </li>
                 <!--<li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="{{ url_for('index')}}">Home</a>
                 </li>-->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('Person')}}">Cadastro de Pacientes</a>
+                    <a class="nav-link" href="{{ url_for('person')}}">Pessoa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('religion')}}">Religiões</a>
                 </li>
             </ul>
         </div>
