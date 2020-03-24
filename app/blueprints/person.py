@@ -1,77 +1,13 @@
-from flask import render_template#, request, redirect
-from app import app#, db
-#from datetime import datetime, date
+from flask import Blueprint, render_template, request, redirect
+from app import db
+from app.person.models import Person
+from app.person.forms import PersonRegistrationForm
 
-#from app.models.tables import Person, BloodType, Religion
-#from app.models.forms import LoginForm, PersonRegistrationForm, BloodTypeForm, ReligionForm
+from datetime import datetime, date
 
+person_blueprint = Blueprint('person', __name__)
 
-@app.route('/index')
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-'''
-@app.route('/login', methods=["GET", "POST"])
-def login():
-    loginForm = LoginForm()
-
-    if request.method == 'POST':
-        print('POST')
-    else:
-        print('Não POST')
-        
-    if loginForm.validate_on_submit():
-        print(loginForm.username.data)
-        print(loginForm.password.data)
-    else:
-        print(login.errors)
-
-    return render_template('login.html', loginForm=loginForm)
-
-
-@app.route('/religion', methods=['GET', 'POST'])
-def religion():
-    religionForm = ReligionForm()
-
-    if religionForm.validate_on_submit():
-        #Religion
-        religion = religionForm.religion.data
-
-        #Observations
-        observations = religionForm.observations.data
-        if observations == '':
-            observations = None
-
-        #Action DateTime
-        created_at = datetime.now()  #Created at
-        updated_at = None  #Updated at  #Deleted(soft delete)
-        deleted = 0  #Deleted(soft delete)
-        deleted_at = None  #Deleted at(soft delete)
-
-        new_religion = Religion(religion=religion, observations=observations, created_at=created_at, updated_at=updated_at, deleted=deleted, deleted_at=deleted_at)
-
-        db.session.add(new_religion)
-        db.session.commit()
-        # Criar listagem e fazer redirecionamento para ela.
-        return redirect('../')
-
-    else:
-        #return personRegistration.errors
-        print(religionForm.errors)
-
-    return render_template('religion/religionRegister.html', religionForm=religionForm)
-
-
-@app.route('/test', methods=['GET'])
-def blood():
-    bloodType = BloodTypeForm()
-    blood_Type = BloodType.query.filter_by().all()
-    
-    return render_template('test.html',bloodType=bloodType)
-
-
-@app.route('/personRegister', methods=['POST', 'GET'])
+@person_blueprint.route('/person', methods=['POST', 'GET'])
 def person():
     personRegistration = PersonRegistrationForm()
 
@@ -160,30 +96,4 @@ def person():
         #return personRegistration.errors
         print(personRegistration.errors)
     
-    return render_template('person/personRegister.html', personRegistration = personRegistration)
-
-*****************
-@app.route('/testSelect/<name>')
-@app.route('/testSelect', defaults={"name": None})
-def testSelect(name):
-    #select = User.query.filter_by(username="erc_m").all() #retorna o usuário por campo 
-    select = User.query.filter_by(username="erc_m").first() #retorna registro por ID
-    print(select)
-    return render_template('test.html', name = select.name)
-
-@app.route('/testUpdate/<info>')
-@app.route('/testUpdate', defaults={"info": None})
-def testUpdate(info):
-    update = User.query.filter_by(username="erc_m").first()
-    update.name = "Eric F. Marques"
-    db.session.add(update)
-    db.session.commit()
-    return "Alterado"
-
-@app.route('/testDelete/<info>')
-@app.route('/testDelete', defaults={"info": None})
-def testDelete(info):
-    delete = User.query.filter_by(username="ercic").first()
-    db.session.delete(delete)
-    db.session.commit()
-    return "Deletado" '''
+    return render_template('person/form/personRegister.html', personRegistration = personRegistration)

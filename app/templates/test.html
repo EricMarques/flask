@@ -1,4 +1,2 @@
-{%extends 'base.html'%}{%block title%}{{super()}} - Testes {%endblock%}{%block content%} {{bloodType.csrf_token}}
-<h1>Blood Type</h1> {%for bloodType in bloodType%}
-<li>{{bloodType}}</li>
-{%endfor%} {%endblock%}
+{%extends 'base.html'%}{%block title%}{{super()}} - Testes {%endblock%}{%block content%} {{bloodType.csrf_token}}{{bloodType.hidden_tag()}}
+<h1>Blood Type</h1> {%for bloodType in bloodType%} {{bloodType}} {%endfor%} {%endblock%}
